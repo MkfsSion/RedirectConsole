@@ -16,8 +16,8 @@ namespace WTSService {
 		auto result = WTSEnumerateSessionsExA(WTS_CURRENT_SERVER_HANDLE, &level, 0, &sessions, &count);
 		if (!result || count == 0)
 		{
-			LOGGER_DEBUG("Failed to get sessions information");
-			LOGGER_DEBUG("Error reason: " + std::to_string(GetLastError()));
+			LOGGER_ERROR("Failed to get sessions information");
+			LOGGER_ERROR("Error reason: " + std::to_string(GetLastError()));
 		}
 		LOGGER_DEBUG("Successfully get " + std::to_string(count) + " sessions");
 		for (int i = 0; i < static_cast<int>(count); i++) {
@@ -47,16 +47,16 @@ namespace WTSService {
 	void WTSSession::connect(const SessionInfo &session) {
 		auto res = WTSConnectSessionA(LOGONID_CURRENT, session.sessionId, "", true);
 		if (!res) {
-			LOGGER_DEBUG("Failed to connect to session " + session.sessionName);
-			LOGGER_DEBUG("Error reason: " + std::to_string(GetLastError()));
+			LOGGER_ERROR("Failed to connect to session " + session.sessionName);
+			LOGGER_ERROR("Error reason: " + std::to_string(GetLastError()));
 		}
 	}
 
 	void WTSSession::disconnect(const SessionInfo &session) {
 		auto res = WTSDisconnectSession(WTS_CURRENT_SERVER_HANDLE, session.sessionId, true);
 		if (!res) {
-			LOGGER_DEBUG("Failed to disconnect from session " + session.sessionName);
-			LOGGER_DEBUG("Error reason: " + std::to_string(GetLastError()));
+			LOGGER_ERROR("Failed to disconnect from session " + session.sessionName);
+			LOGGER_ERROR("Error reason: " + std::to_string(GetLastError()));
 		}
 	}
 
