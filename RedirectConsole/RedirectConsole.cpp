@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cstdint>
 #include <string>
-#include <string.h>
 #include <Windows.h>
 #include <WtsApi32.h>
 
@@ -17,15 +16,15 @@ auto main() -> int {
 	WTSService::WTSSession sm;
 	auto current = sm.getCurrentSession();
 	if (current == nullptr) {
-		LOGGER_DEBUG("Failed to get current session info");
+		LOGGER_ERROR("Failed to get current session info");
 		return -1;
 	}
 	else if (current->sessionName == "console") {
-		LOGGER_DEBUG("Please run this program after connecting to RDP");
+		LOGGER_ERROR("Please run this program after connecting to RDP");
 		return -1;
 	}
 	else if (current->sessionName.find("rdp-tcp") != 0) {
-		LOGGER_DEBUG("Unknown current session: " + current->sessionName);
+		LOGGER_ERROR("Unknown current session: " + current->sessionName);
 		return -1;
 	}
 	auto &sessions = sm.getSessions();
@@ -35,7 +34,7 @@ auto main() -> int {
 			info = &session;
 	}
 	if (info == nullptr) {
-		LOGGER_DEBUG("Failed to get console session");
+		LOGGER_ERROR("Failed to get console session");
 		return -1;
 	}
 	sm.disconnectCurrent();
