@@ -36,12 +36,14 @@ namespace WTSService {
 	}
 
 	const SessionInfo *WTSSession::getCurrentSession() {
-		for (auto &session : mSessions)
-		{
-			if (session.state == WTSActive)
-				return &session;
+		if (mCurrentSession == nullptr) {
+			for (auto &session : mSessions){
+				if (session.state == WTSActive) {
+					mCurrentSession = &session;
+				}
+			}
 		}
-		return nullptr;
+		return mCurrentSession;
 	}
 	
 	void WTSSession::connect(const SessionInfo &session) {

@@ -18,6 +18,7 @@ namespace WTSService {
 	class WTSSession {
 	private:
 		std::vector<SessionInfo> mSessions;
+		const SessionInfo *mCurrentSession = nullptr;
 	public:
 		WTSSession();
 		WTSSession(const WTSSession &session) = delete;
