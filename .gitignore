@@ -1,9 +1,2 @@
-Win32
-x64
-*.exe
-*.ilk
-*.pdb
-*.opensdf
-*.suo
-*.log
-*.sdf
+.idea/
+cmake-build-debug/
